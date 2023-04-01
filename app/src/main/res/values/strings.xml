@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">software_pattern_online_shop</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="landing_page_laptop_image">Landing Page Laptop Image</string>
+    <string name="top_tech_logo">Top Tech Logo</string>
 </resources>
