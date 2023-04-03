@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">software_pattern_online_shop</string>
+    <string name="app_name">TopTech</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="landing_page_laptop_image">Landing Page Laptop Image</string>
@@ -62,5 +62,14 @@
         <item>Wexford</item>
         <item>Wicklow</item>
     </string-array>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_basket">Basket</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_logout">Logout</string>
+    <string name="nav_add_new_stock">Add New Stock</string>
+    <string name="nav_update_stock">Update Stock</string>
+    <string name="nav_customer_details">Customer Details</string>
 
 </resources>

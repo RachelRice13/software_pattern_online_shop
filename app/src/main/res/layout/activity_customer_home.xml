@@ -7,11 +7,42 @@
     android:layout_height="match_parent"
     tools:context=".HomePage.CustomerHomeActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Customer Home Page"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"/>
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/customer_drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/customer_top_app_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:title="@string/app_name"
+                    app:navigationIcon="@drawable/ic_menu"
+                    android:background="@color/white" />
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <FrameLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/customer_navigation_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:insetForeground="@android:color/transparent"
+            app:headerLayout="@layout/nav_header"
+            app:menu="@menu/customer_menu"
+            android:visibility="visible"/>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </RelativeLayout>
