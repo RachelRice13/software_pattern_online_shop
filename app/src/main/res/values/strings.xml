@@ -4,4 +4,63 @@
     <string name="login">Login</string>
     <string name="landing_page_laptop_image">Landing Page Laptop Image</string>
     <string name="top_tech_logo">Top Tech Logo</string>
+
+    <!-- Registration -->
+    <string name="create_account">Create Account</string>
+    <string name="first_name">First Name</string>
+    <string name="surname">Surname</string>
+    <string name="customer">Customer</string>
+    <string name="administration">Administration</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="continue_text">Continue</string>
+    <string name="go_to_landing_page">Go to Landing Page</string>
+    <string name="account_type"><u>Account Type</u></string>
+    <string name="admin_account">Admin Account</string>
+    <string name="job_title">Job Title</string>
+    <string name="employee_number">Employee Number</string>
+    <string name="go_back">Go Back</string>
+    <string name="customer_account">Customer Account</string>
+    <string name="address_line_1">Address Line 1</string>
+    <string name="address_line_2">Address Line 2 (Optional)</string>
+    <string name="address_line_3">Address Line 3 (Optional)</string>
+    <string name="town_or_city">Town or City</string>
+    <string name="eircode">Eircode</string>
+
+    <string-array name="county_options">
+        <item>County</item>
+        <item>Antrim</item>
+        <item>Armagh</item>
+        <item>Carlow</item>
+        <item>Cavan</item>
+        <item>Clare</item>
+        <item>Cork</item>
+        <item>Derry</item>
+        <item>Donegal</item>
+        <item>Down</item>
+        <item>Dublin</item>
+        <item>Fermanagh</item>
+        <item>Galway</item>
+        <item>Kerry</item>
+        <item>Kildare</item>
+        <item>Kilkenny</item>
+        <item>Laois</item>
+        <item>Leitrim</item>
+        <item>Limerick</item>
+        <item>Longford</item>
+        <item>Louth</item>
+        <item>Mayo</item>
+        <item>Meath</item>
+        <item>Monaghan</item>
+        <item>Offaly</item>
+        <item>Roscommon</item>
+        <item>Sligo</item>
+        <item>Tipperary</item>
+        <item>Tyrone</item>
+        <item>Waterford</item>
+        <item>Westmeath</item>
+        <item>Wexford</item>
+        <item>Wicklow</item>
+    </string-array>
+
 </resources>

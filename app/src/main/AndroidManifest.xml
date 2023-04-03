@@ -13,6 +13,34 @@
         android:theme="@style/Theme.Software_pattern_online_shop"
         tools:targetApi="31">
         <activity
+            android:name=".HomePage.CustomerHomeActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".HomePage.AdminHomeActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".LoginRegister.AdminRegisterActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".LoginRegister.CustomerRegisterActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".LoginRegister.LoginActivity"
             android:exported="false">
             <meta-data

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginRegister.AdminRegisterActivity">
+
+    <TextView
+        android:id="@+id/admin_account_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/admin_account"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:fontFamily="serif"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="40dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/reg_job_title"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/admin_account_tv"
+        android:hint="@string/job_title"
+        app:startIconDrawable="@drawable/ic_brief_case"
+        app:startIconTint="@color/black"
+        android:layout_marginTop="30dp"
+        android:paddingStart="45dp"
+        android:paddingEnd="45dp"
+        android:textColorHint="@color/black"
+        app:boxStrokeColor="@color/grey"
+        app:boxStrokeWidth="1dp"
+        app:errorEnabled="true"
+        app:hintTextColor="@color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reg_job_title_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:textColor="@color/black"
+            android:textColorHint="#757575" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/reg_employee_number"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reg_job_title"
+        android:hint="@string/employee_number"
+        app:startIconDrawable="@drawable/ic_people_circle"
+        app:startIconTint="@color/black"
+        android:paddingStart="45dp"
+        android:paddingEnd="45dp"
+        android:textColorHint="@color/black"
+        app:boxStrokeColor="@color/grey"
+        app:boxStrokeWidth="1dp"
+        app:errorEnabled="true"
+        app:hintTextColor="@color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reg_employee_number_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textColorHint="#757575"
+            android:maxLength="8" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register"
+        android:textSize="20sp"
+        android:layout_above="@id/go_back_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"/>
+
+    <Button
+        android:id="@+id/go_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/go_back"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:textSize="15sp"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:background="#00000000"/>
+
+</RelativeLayout>

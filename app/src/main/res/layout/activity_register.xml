@@ -8,10 +8,207 @@
     tools:context=".LoginRegister.RegisterActivity">
 
     <TextView
+        android:id="@+id/create_account_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_account"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:fontFamily="serif"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="40dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profile_image_cv"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/create_account_tv"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="100dp">
+
+        <ImageView
+            android:id="@+id/profile_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_profile" />
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/name_layout"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_image_cv"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/reg_first_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/first_name"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/grey"
+            app:boxStrokeWidth="1dp"
+            app:errorEnabled="true"
+            app:hintTextColor="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_first_name_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"
+                android:textColor="@color/black"
+                android:textColorHint="#757575" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/reg_surname"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/surname"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/grey"
+            app:boxStrokeWidth="1dp"
+            app:errorEnabled="true"
+            app:hintTextColor="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_surname_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"
+                android:textColor="@color/black"
+                android:textColorHint="#757575" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/reg_email"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name_layout"
+        android:hint="@string/email"
+        app:startIconDrawable="@drawable/ic_email"
+        app:startIconTint="@color/black"
+        android:paddingStart="45dp"
+        android:paddingEnd="45dp"
+        android:textColorHint="@color/black"
+        app:boxStrokeColor="@color/grey"
+        app:boxStrokeWidth="1dp"
+        app:errorEnabled="true"
+        app:hintTextColor="@color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reg_email_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/black"
+            android:textColorHint="#757575" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/reg_password"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reg_email"
+        android:hint="@string/password"
+        app:startIconDrawable="@drawable/ic_password"
+        app:startIconTint="@color/black"
+        app:endIconMode="password_toggle"
+        app:endIconTint="@color/black"
+        android:paddingStart="45dp"
+        android:paddingEnd="45dp"
+        android:textColorHint="@color/black"
+        app:boxStrokeColor="@color/grey"
+        app:boxStrokeWidth="1dp"
+        app:errorEnabled="true"
+        app:hintTextColor="@color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reg_password_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword"
+            android:textColor="@color/black"
+            android:textColorHint="#757575" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/account_type_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:layout_below="@id/reg_password"
+        android:text="@string/account_type"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        />
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/account_type_tv"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radio_admin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/administration"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/radio_customer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/customer"
+            android:textSize="16sp"
+            android:layout_marginStart="25dp"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/continue_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/register"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"/>
+        android:text="@string/continue_text"
+        android:textSize="20sp"
+        android:layout_above="@id/landing_page_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"/>
+
+    <Button
+        android:id="@+id/landing_page_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/go_to_landing_page"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:textSize="15sp"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:background="#00000000"/>
 
 </RelativeLayout>
