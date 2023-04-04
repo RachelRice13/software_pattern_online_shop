@@ -6,11 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".HomePage.CustomerHomeFragment">
 
-    <TextView
+    <ImageView
+        android:id="@+id/topTech_logo"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/top_tech_logo"
+        android:src="@drawable/logo"
+        tools:ignore="ImageContrastCheck"
+        android:layout_marginTop="60dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/stock_items_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Customer Home Fragment"
-        android:textSize="20sp"
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topTech_logo"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:padding="6dp"
+        android:scrollbars="vertical"/>
+
+    <TextView
+        android:id="@+id/no_items_message_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_items_in_catalog"
+        android:layout_centerInParent="true"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

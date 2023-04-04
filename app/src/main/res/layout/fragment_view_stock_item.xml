@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Stock.ViewStockItemFragment">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/go_back_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/ic_arrow_back"
+        android:focusable="true"
+        android:clickable="true"
+        android:backgroundTint="@color/transparent"
+        app:borderWidth="0dp"
+        app:elevation="0dp"
+        app:maxImageSize="30dp"
+        app:fabSize="mini"/>
+
+    <TextView
+        android:id="@+id/item_title_tv"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:text="@string/title"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_alignTop="@id/go_back_button"
+        android:layout_alignBottom="@id/go_back_button"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/item_image_iv"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:src="@drawable/ic_image"
+        android:layout_below="@id/item_title_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/item_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_image_iv"
+        android:orientation="vertical"
+        android:background="@drawable/customer_border_white_background"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/manufacturer"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:drawableStartCompat="@drawable/ic_manufacturer"
+                android:drawablePadding="15dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/item_manufacturer_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/manufacturer"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/price_two"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:drawableStartCompat="@drawable/ic_euro"
+                android:drawablePadding="15dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/item_price_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/price_two"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/quantity"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:drawableStartCompat="@drawable/ic_quantity"
+                android:drawablePadding="15dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/item_quantity_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/quantity"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/category"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:drawableStartCompat="@drawable/ic_category"
+                android:drawablePadding="15dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/item_category_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/category"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

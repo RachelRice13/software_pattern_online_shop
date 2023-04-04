@@ -2,65 +2,87 @@ package com.example.software_pattern_online_shop.HomePage;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.example.software_pattern_online_shop.Model.StockItem;
 import com.example.software_pattern_online_shop.R;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CustomerHomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class CustomerHomeFragment extends Fragment {
+    private View view;
+    private FirebaseFirestore firebaseFirestore;
+    private ListenerRegistration listenerRegistration;
+    private ArrayList<StockItem> stockItems;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private StockItemAdapter stockItemAdapter;
+    private TextView noItemsMessageTV;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public CustomerHomeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CustomerHomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CustomerHomeFragment newInstance(String param1, String param2) {
-        CustomerHomeFragment fragment = new CustomerHomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public CustomerHomeFragment() {}
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_customer_home, container, false);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        noItemsMessageTV = view.findViewById(R.id.no_items_message_tv);
+        buildRecyclerView();
+
+        if (stockItems.size() == 0) {
+            noItemsMessageTV.setVisibility(View.VISIBLE);
+        }
+
+        return view;
+    }
+
+    private void populateList() {
+        Query query = firebaseFirestore.collection("items").orderBy("price", Query.Direction.ASCENDING);
+        listenerRegistration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                for (DocumentChange change : value.getDocumentChanges()) {
+                    if (change.getType() == DocumentChange.Type.ADDED) {
+                        StockItem stockItem = change.getDocument().toObject(StockItem.class).withId(change.getDocument().getId());
+                        stockItems.add(stockItem);
+                        stockItemAdapter.notifyDataSetChanged();
+                        hideMessage(stockItems.size());
+                    }
+                }
+                listenerRegistration.remove();
+            }
+        });
+    }
+
+    private void hideMessage(int size) {
+        if (size != 0) {
+            noItemsMessageTV.setVisibility(View.INVISIBLE);
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customer_home, container, false);
+    private void buildRecyclerView() {
+        stockItems = new ArrayList<>();
+        recyclerView = view.findViewById(R.id.stock_items_rv);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(view.getContext());
+        stockItemAdapter = new StockItemAdapter(stockItems, getContext(), getFragmentManager());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(stockItemAdapter);
+        populateList();
     }
 }

@@ -1,6 +1,8 @@
 package com.example.software_pattern_online_shop.Model;
 
-public class StockItem {
+import java.io.Serializable;
+
+public class StockItem extends StockItemId implements Serializable {
     String title, manufacturer, category, imagePath;
     double price;
     int quantity;

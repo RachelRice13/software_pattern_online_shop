@@ -236,7 +236,7 @@ public class AddNewStockFragment extends Fragment {
     }
 
     public void addToFireStore(StockItem stockItem) {
-        firebaseFirestore.collection("stock_items")
+        firebaseFirestore.collection("items")
                 .add(stockItem)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
