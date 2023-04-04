@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    protected static boolean validateBlank(String text, TextInputLayout layout) {
+    public static boolean validateBlank(String text, TextInputLayout layout) {
         if (text.isEmpty()) {
             layout.setError("This is Required");
             return false;
