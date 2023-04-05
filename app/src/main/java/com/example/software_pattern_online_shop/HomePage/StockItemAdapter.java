@@ -23,6 +23,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StockItemAdapter extends RecyclerView.Adapter<StockItemAdapter.ExampleViewHolder> {
@@ -100,5 +101,10 @@ public class StockItemAdapter extends RecyclerView.Adapter<StockItemAdapter.Exam
     @Override
     public int getItemCount() {
         return stockItems.size();
+    }
+
+    public void filteredList(ArrayList<StockItem> filteredList) {
+        stockItems = filteredList;
+        notifyDataSetChanged();
     }
 }

@@ -88,4 +88,12 @@
     <string name="cancel">Cancel</string>
     <string name="no_items_in_catalog">No items in catalog.</string>
 
+    <!-- Search -->
+    <string name="search">Search....</string>
+    <string-array name="search_by_options">
+        <item>Category</item>
+        <item>Manufacturer</item>
+        <item>Title</item>
+    </string-array>
+
 </resources>
