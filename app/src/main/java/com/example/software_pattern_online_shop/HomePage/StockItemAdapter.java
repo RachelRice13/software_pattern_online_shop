@@ -24,6 +24,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class StockItemAdapter extends RecyclerView.Adapter<StockItemAdapter.ExampleViewHolder> {
@@ -105,6 +107,22 @@ public class StockItemAdapter extends RecyclerView.Adapter<StockItemAdapter.Exam
 
     public void filteredList(ArrayList<StockItem> filteredList) {
         stockItems = filteredList;
+        notifyDataSetChanged();
+    }
+
+    public void sortByTitleAsc() {
+        Comparator<StockItem> comparator = new Comparator<StockItem>() {
+            @Override
+            public int compare(StockItem o1, StockItem o2) {
+                return o1.getTitle().compareToIgnoreCase(o2.getTitle());
+            }
+        };
+        Collections.sort(stockItems, comparator);
+        notifyDataSetChanged();
+    }
+
+    public void sortByDesc() {
+        Collections.reverse(stockItems);
         notifyDataSetChanged();
     }
 }

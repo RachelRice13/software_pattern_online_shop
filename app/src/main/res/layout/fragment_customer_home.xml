@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomePage.CustomerHomeFragment">
 
     <LinearLayout
@@ -17,21 +18,48 @@
             android:id="@+id/search_et"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="3dp"
             android:drawableEnd="@drawable/ic_search"
             android:hint="@string/search"
             android:importantForAutofill="no"
             android:inputType="text"
-            android:minHeight="48dp"
+            android:textSize="15sp"
             android:textColorHint="#757575"
             android:layout_weight="1"/>
 
         <Spinner
             android:id="@+id/search_by_spinner"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="1"/>
+            android:layout_height="45dp"
+            android:textSize="15sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1.25"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="0.5"
+            android:layout_margin="5dp"
+            android:gravity="center">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/sort_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/switch_arrows"
+                android:focusable="true"
+                android:clickable="true"
+                app:borderWidth="0dp"
+                app:elevation="0dp"
+                app:maxImageSize="25dp"
+                app:fabSize="mini" />
+        </RelativeLayout>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -39,7 +67,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/search_ll"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:padding="6dp"
         android:scrollbars="vertical"/>
 

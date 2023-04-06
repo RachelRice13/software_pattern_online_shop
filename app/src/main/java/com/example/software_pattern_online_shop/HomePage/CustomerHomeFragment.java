@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.software_pattern_online_shop.Model.StockItem;
 import com.example.software_pattern_online_shop.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,6 +38,7 @@ public class CustomerHomeFragment extends Fragment {
     private StockItemAdapter stockItemAdapter;
     private TextView noItemsMessageTV;
     private Spinner search_by_spinner;
+    private boolean sort = true;
 
     public CustomerHomeFragment() {}
 
@@ -49,6 +51,7 @@ public class CustomerHomeFragment extends Fragment {
         search_by_spinner = view.findViewById(R.id.search_by_spinner);
         buildRecyclerView();
         search();
+        sort();
 
         if (stockItems.size() == 0) {
             noItemsMessageTV.setVisibility(View.VISIBLE);
@@ -146,5 +149,21 @@ public class CustomerHomeFragment extends Fragment {
         }
 
         return filteredList;
+    }
+
+    private void sort() {
+        FloatingActionButton sortButton = view.findViewById(R.id.sort_button);
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sort) {
+                    sort = false;
+                    stockItemAdapter.sortByTitleAsc();
+                } else {
+                    sort = true;
+                    stockItemAdapter.sortByDesc();
+                }
+            }
+        });
     }
 }
