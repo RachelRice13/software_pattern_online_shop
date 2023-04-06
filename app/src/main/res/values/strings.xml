@@ -96,4 +96,10 @@
         <item>Title</item>
     </string-array>
 
+    <!-- Profile -->
+    <string name="full_name">Full Name</string>
+    <string name="purchase_history">Purchase History</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="address">Address</string>
+
 </resources>
