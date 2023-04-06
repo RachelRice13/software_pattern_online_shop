@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.software_pattern_online_shop.HomePage.AdminHomeFragment;
 import com.example.software_pattern_online_shop.LoginRegister.RegisterActivity;
+import com.example.software_pattern_online_shop.Model.Rating;
 import com.example.software_pattern_online_shop.Model.StockItem;
 import com.example.software_pattern_online_shop.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -40,6 +41,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class AddNewStockFragment extends Fragment {
@@ -205,7 +207,8 @@ public class AddNewStockFragment extends Fragment {
             DecimalFormat decimalFormat = new DecimalFormat("#.##");
             double price = Double.parseDouble(decimalFormat.format(Double.parseDouble(priceString)));
             int quantity = Integer.parseInt(quantityString);
-            StockItem stockItem = new StockItem(title, manufacturer, category, imagePath, price, quantity);
+            ArrayList<Rating> ratings = new ArrayList<>();
+            StockItem stockItem = new StockItem(title, manufacturer, category, imagePath, price, quantity, ratings);
             addToFireStore(stockItem);
         }
     }

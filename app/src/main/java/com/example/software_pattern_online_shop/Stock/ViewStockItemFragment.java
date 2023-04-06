@@ -8,25 +8,44 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.software_pattern_online_shop.HomePage.AdminHomeFragment;
+import com.example.software_pattern_online_shop.Model.Rating;
 import com.example.software_pattern_online_shop.Model.StockItem;
 import com.example.software_pattern_online_shop.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
 
 public class ViewStockItemFragment extends Fragment {
     private static final String TAG = "ViewStockItemFragment";
     private View view;
+    private StockItem stockItem;
     private StorageReference storageReference;
+    private LinearLayout detailsLL, commentsLL, ratingsLL;
+    private FirebaseFirestore firebaseFirestore;
+    private FirebaseAuth firebaseAuth;
+    private int position;
 
     public ViewStockItemFragment() {}
 
@@ -34,10 +53,22 @@ public class ViewStockItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_view_stock_item, container, false);
 
+        Bundle bundle = getArguments();
+        stockItem = (StockItem) bundle.getSerializable("stockItem");
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
+
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        detailsLL = view.findViewById(R.id.details_ll);
+        commentsLL = view.findViewById(R.id.comments_ll);
+        ratingsLL = view.findViewById(R.id.ratings_ll);
+
+        choose();
         getItemDetails();
+        leaveRating();
 
         FloatingActionButton goBack = view.findViewById(R.id.go_back_button);
         goBack.setOnClickListener(new View.OnClickListener() {
@@ -51,8 +82,6 @@ public class ViewStockItemFragment extends Fragment {
     }
 
     private void getItemDetails() {
-        Bundle bundle = getArguments();
-        StockItem stockItem = (StockItem) bundle.getSerializable("stockItem");
         TextView titleTv, manufacturerTv, priceTv, quantityTv, categoryTv;
         ImageView itemImageIv = view.findViewById(R.id.item_image_iv);
 
@@ -83,5 +112,138 @@ public class ViewStockItemFragment extends Fragment {
                         itemImageIv.setImageResource(R.drawable.ic_basket);
                     }
                 });
+    }
+
+    private void leaveRating() {
+        RatingBar ratingBar = view.findViewById(R.id.item_rating_bar);
+        Button leaveRatingBut = view.findViewById(R.id.leave_rating_but);
+        String userId = firebaseAuth.getCurrentUser().getUid();
+
+        setRating(userId, ratingBar);
+
+        leaveRatingBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float itemRating = ratingBar.getRating();
+                Rating rating = new Rating(itemRating, userId);
+
+                firebaseFirestore.collection("items").whereEqualTo("title", stockItem.getTitle()).get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                                        StockItem item = documentSnapshot.toObject(StockItem.class);
+                                        ArrayList<Rating> ratings = item.getRatings();
+                                        String docId = documentSnapshot.getId();
+                                        boolean found = false;
+
+                                        for (int i = 0; i < ratings.size(); i++) {
+                                            Rating r = ratings.get(i);
+                                            if (r.getUserId().equals(userId)) {
+                                                found = true;
+                                                position = i;
+                                            }
+                                        }
+
+                                        if (found)
+                                            updateRatingValue(docId, ratings, position, rating);
+                                        else
+                                            addRatingToFirestore(rating, docId);
+
+                                    }
+                                }
+                            }
+                        });
+            }
+        });
+    }
+
+    private void setRating(String userId, RatingBar ratingBar) {
+        firebaseFirestore.collection("items").whereEqualTo("title", stockItem.getTitle()).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                                StockItem item = documentSnapshot.toObject(StockItem.class);
+
+                                for (Rating r : item.getRatings()) {
+                                    if (r.getUserId().equals(userId)) {
+                                        ratingBar.setRating(r.getRating());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void addRatingToFirestore(Rating rating, String docId) {
+        firebaseFirestore.collection("items").document(docId).update("ratings", FieldValue.arrayUnion(rating))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Added rating to DB");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Failed to add rating to DB");
+                    }
+                });
+    }
+
+    private void updateRatingValue(String docId, ArrayList<Rating> ratings, int position, Rating rating) {
+        ratings.set(position, rating);
+
+        firebaseFirestore.collection("items").document(docId).update("ratings", ratings)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Updated rating value");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Failed to update rating value");
+                    }
+                });
+    }
+
+    private void choose() {
+        Button detailsBut, commentsBut, ratingsBut;
+        detailsBut = view.findViewById(R.id.details_button);
+        commentsBut = view.findViewById(R.id.comments_button);
+        ratingsBut = view.findViewById(R.id.rating_button);
+
+        detailsBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                detailsLL.setVisibility(View.VISIBLE);
+                commentsLL.setVisibility(View.INVISIBLE);
+                ratingsLL.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        commentsBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                detailsLL.setVisibility(View.INVISIBLE);
+                commentsLL.setVisibility(View.VISIBLE);
+                ratingsLL.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        ratingsBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                detailsLL.setVisibility(View.INVISIBLE);
+                commentsLL.setVisibility(View.INVISIBLE);
+                ratingsLL.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }

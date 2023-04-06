@@ -102,4 +102,10 @@
     <string name="payment_method">Payment Method</string>
     <string name="address">Address</string>
 
+    <!-- Rating -->
+    <string name="details">Details</string>
+    <string name="comments">Comments</string>
+    <string name="ratings">Ratings</string>
+    <string name="leave_rating">Leave Rating</string>
+
 </resources>
