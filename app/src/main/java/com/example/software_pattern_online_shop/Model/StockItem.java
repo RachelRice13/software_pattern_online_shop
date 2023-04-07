@@ -8,10 +8,11 @@ public class StockItem extends StockItemId implements Serializable {
     double price;
     int quantity;
     ArrayList<Rating> ratings;
+    ArrayList<Comment> comments;
 
     public StockItem() {}
 
-    public StockItem(String title, String manufacturer, String category, String imagePath, double price, int quantity, ArrayList<Rating> ratings) {
+    public StockItem(String title, String manufacturer, String category, String imagePath, double price, int quantity, ArrayList<Rating> ratings, ArrayList<Comment> comments) {
         this.title = title;
         this.manufacturer = manufacturer;
         this.category = category;
@@ -19,6 +20,7 @@ public class StockItem extends StockItemId implements Serializable {
         this.price = price;
         this.quantity = quantity;
         this.ratings = ratings;
+        this.comments = comments;
     }
 
     public String getTitle() {
@@ -68,5 +70,12 @@ public class StockItem extends StockItemId implements Serializable {
     }
     public void setRatings(ArrayList<Rating> ratings) {
         this.ratings = ratings;
+    }
+
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
+    public void setComments(ArrayList<Comment> comments) {
+        this.comments = comments;
     }
 }

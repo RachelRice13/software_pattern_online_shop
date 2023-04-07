@@ -11,16 +11,18 @@
         android:id="@+id/go_back_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="70dp"
         android:layout_marginStart="10dp"
-        android:src="@drawable/ic_arrow_back"
-        android:focusable="true"
-        android:clickable="true"
+        android:layout_marginTop="60dp"
         android:backgroundTint="@color/transparent"
+        android:clickable="true"
+        android:contentDescription="@string/go_back_button"
+        android:focusable="true"
+        android:src="@drawable/ic_arrow_back"
         app:borderWidth="0dp"
         app:elevation="0dp"
+        app:fabSize="mini"
         app:maxImageSize="30dp"
-        app:fabSize="mini"/>
+        tools:ignore="RedundantDescriptionCheck" />
 
     <TextView
         android:id="@+id/item_title_tv"
@@ -41,10 +43,11 @@
         android:id="@+id/item_image_iv"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:src="@drawable/ic_image"
         android:layout_below="@id/item_title_tv"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:src="@drawable/ic_image"
+        tools:ignore="ImageContrastCheck"
+        android:contentDescription="@string/stock_item_image"/>
 
     <LinearLayout
         android:id="@+id/button_ll"
@@ -52,7 +55,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/item_image_iv"
         android:orientation="horizontal"
-        android:layout_margin="10dp">
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
 
         <Button
             android:id="@+id/details_button"
@@ -64,7 +68,8 @@
             android:textSize="15sp"
             android:layout_weight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/transparent_button" />
+            android:background="@drawable/transparent_button"
+            style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/comments_button"
@@ -76,7 +81,8 @@
             android:textSize="15sp"
             android:layout_weight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/transparent_button" />
+            android:background="@drawable/transparent_button"
+            style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/rating_button"
@@ -88,7 +94,8 @@
             android:textSize="15sp"
             android:layout_weight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/transparent_button" />
+            android:background="@drawable/transparent_button"
+            style="?android:attr/buttonBarButtonStyle" />
     </LinearLayout>
 
     <LinearLayout
@@ -100,7 +107,8 @@
         android:background="@drawable/customer_border_white_background"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -214,16 +222,54 @@
         android:layout_below="@id/button_ll"
         android:orientation="vertical"
         android:background="@drawable/customer_border_white_background"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:visibility="invisible">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/send_message_ll"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/comments"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal"
+            android:background="@drawable/custom_border_grey">
+
+            <EditText
+                android:id="@+id/type_message_et"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autofillHints=""
+                android:background="#FFFFFF"
+                android:hint="@string/type_a_message"
+                android:inputType="textMultiLine"
+                android:minHeight="48dp"
+                android:padding="10dp"
+                android:textColor="#000000"
+                android:textColorHint="#78909C"
+                android:textSize="20sp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/send_message_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:clickable="true"
+                android:contentDescription="@string/send_comment_button"
+                android:focusable="true"
+                android:src="@drawable/ic_arrow_forward"
+                app:borderWidth="0dp"
+                app:elevation="0dp"
+                app:fabSize="mini"
+                app:maxImageSize="30dp"
+                tools:ignore="RedundantDescriptionCheck,ImageContrastCheck" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/comments_rv"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginBottom="5dp"
+            android:padding="5dp"
+            android:scrollbars="vertical"/>
     </LinearLayout>
 
     <LinearLayout

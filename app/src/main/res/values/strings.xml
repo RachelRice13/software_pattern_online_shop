@@ -108,4 +108,11 @@
     <string name="ratings">Ratings</string>
     <string name="leave_rating">Leave Rating</string>
 
+    <!-- Comment -->
+    <string name="type_a_message">Type Comment Here</string>
+    <string name="username">Username</string>
+    <string name="go_back_button">Go Back Button</string>
+    <string name="stock_item_image">Stock Item Image</string>
+    <string name="send_comment_button">Send comment button</string>
+
 </resources>

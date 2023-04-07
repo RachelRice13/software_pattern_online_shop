@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.software_pattern_online_shop.HomePage.AdminHomeFragment;
 import com.example.software_pattern_online_shop.LoginRegister.RegisterActivity;
+import com.example.software_pattern_online_shop.Model.Comment;
 import com.example.software_pattern_online_shop.Model.Rating;
 import com.example.software_pattern_online_shop.Model.StockItem;
 import com.example.software_pattern_online_shop.R;
@@ -208,7 +209,9 @@ public class AddNewStockFragment extends Fragment {
             double price = Double.parseDouble(decimalFormat.format(Double.parseDouble(priceString)));
             int quantity = Integer.parseInt(quantityString);
             ArrayList<Rating> ratings = new ArrayList<>();
-            StockItem stockItem = new StockItem(title, manufacturer, category, imagePath, price, quantity, ratings);
+            ArrayList<Comment> comments = new ArrayList<>();
+
+            StockItem stockItem = new StockItem(title, manufacturer, category, imagePath, price, quantity, ratings, comments);
             addToFireStore(stockItem);
         }
     }

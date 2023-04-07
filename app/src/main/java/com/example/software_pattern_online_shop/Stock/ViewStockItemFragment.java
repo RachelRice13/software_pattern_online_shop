@@ -7,18 +7,25 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.software_pattern_online_shop.HomePage.AdminHomeFragment;
+import com.example.software_pattern_online_shop.Model.Admin;
+import com.example.software_pattern_online_shop.Model.Comment;
+import com.example.software_pattern_online_shop.Model.Customer;
 import com.example.software_pattern_online_shop.Model.Rating;
 import com.example.software_pattern_online_shop.Model.StockItem;
 import com.example.software_pattern_online_shop.R;
@@ -46,6 +53,9 @@ public class ViewStockItemFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
     private int position;
+    private String userId, username;
+    private ArrayList<Comment> comments;
+    private CommentsAdapter commentsAdapter;
 
     public ViewStockItemFragment() {}
 
@@ -60,6 +70,7 @@ public class ViewStockItemFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
+        userId = firebaseAuth.getCurrentUser().getUid();
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         detailsLL = view.findViewById(R.id.details_ll);
@@ -68,6 +79,7 @@ public class ViewStockItemFragment extends Fragment {
 
         choose();
         getItemDetails();
+        leaveComment();
         leaveRating();
 
         FloatingActionButton goBack = view.findViewById(R.id.go_back_button);
@@ -114,10 +126,96 @@ public class ViewStockItemFragment extends Fragment {
                 });
     }
 
+    private void leaveComment() {
+        EditText commentEt = view.findViewById(R.id.type_message_et);
+        FloatingActionButton sendMessageBut = view.findViewById(R.id.send_message_button);
+
+        getComments();
+        getUsername();
+
+        sendMessageBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String comment = commentEt.getText().toString();
+                Comment newComment = new Comment(comment, username);
+
+                if (comment.equals("")) {
+                    Toast.makeText(getContext(), "Type a message into the comment box", Toast.LENGTH_SHORT).show();
+                } else {
+                    firebaseFirestore.collection("items").whereEqualTo("title", stockItem.getTitle()).get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                                            String docId = documentSnapshot.getId();
+                                            addToArrayFireStore(newComment, docId, "comments");
+                                            commentsAdapter.notifyDataSetChanged();
+                                            commentEt.setText("");
+                                        }
+                                    }
+                                }
+                            });
+                }
+            }
+        });
+    }
+
+    private void getComments() {
+        comments = stockItem.getComments();
+        RecyclerView recyclerView = view.findViewById(R.id.comments_rv);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        commentsAdapter = new CommentsAdapter(comments, getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(commentsAdapter);
+    }
+
+    private void getUsername() {
+        firebaseFirestore.collection("admin").document(firebaseAuth.getCurrentUser().getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            Admin admin = documentSnapshot.toObject(Admin.class);
+                            username = admin.getFirstName() + " " + admin.getSurname();
+                        } else {
+                            firebaseFirestore.collection("customer").document(firebaseAuth.getCurrentUser().getUid()).get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            if (documentSnapshot.exists()) {
+                                                Customer customer = documentSnapshot.toObject(Customer.class);
+                                                username = customer.getFirstName() + " " + customer.getSurname();
+                                            } else {
+                                                Log.e(TAG, "User doesn't exist in either the Admin or Customer collections");
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                });
+    }
+
+    private void addToArrayFireStore(Object object, String docId, String arrayName) {
+        firebaseFirestore.collection("items").document(docId).update(arrayName, FieldValue.arrayUnion(object))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Added comment to DB");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Failed to add comment to DB");
+                    }
+                });
+    }
+
     private void leaveRating() {
         RatingBar ratingBar = view.findViewById(R.id.item_rating_bar);
         Button leaveRatingBut = view.findViewById(R.id.leave_rating_but);
-        String userId = firebaseAuth.getCurrentUser().getUid();
 
         setRating(userId, ratingBar);
 
@@ -149,7 +247,7 @@ public class ViewStockItemFragment extends Fragment {
                                         if (found)
                                             updateRatingValue(docId, ratings, position, rating);
                                         else
-                                            addRatingToFirestore(rating, docId);
+                                            addToArrayFireStore(rating, docId, "ratings");;
 
                                     }
                                 }
@@ -175,22 +273,6 @@ public class ViewStockItemFragment extends Fragment {
                                 }
                             }
                         }
-                    }
-                });
-    }
-
-    private void addRatingToFirestore(Rating rating, String docId) {
-        firebaseFirestore.collection("items").document(docId).update("ratings", FieldValue.arrayUnion(rating))
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d(TAG, "Added rating to DB");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "Failed to add rating to DB");
                     }
                 });
     }
