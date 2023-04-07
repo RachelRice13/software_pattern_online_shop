@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.software_pattern_online_shop.HomePage.AdminHomeFragment;
 import com.example.software_pattern_online_shop.Model.Admin;
+import com.example.software_pattern_online_shop.Model.BasketItem;
 import com.example.software_pattern_online_shop.Model.Comment;
 import com.example.software_pattern_online_shop.Model.Customer;
 import com.example.software_pattern_online_shop.Model.Rating;
@@ -34,7 +35,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -49,10 +52,10 @@ public class ViewStockItemFragment extends Fragment {
     private View view;
     private StockItem stockItem;
     private StorageReference storageReference;
-    private LinearLayout detailsLL, commentsLL, ratingsLL;
+    private LinearLayout detailsLL, commentsLL, ratingsLL, addToBasketLL;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
-    private int position;
+    private int position, quantity = 1;
     private String userId, username;
     private ArrayList<Comment> comments;
     private CommentsAdapter commentsAdapter;
@@ -76,6 +79,7 @@ public class ViewStockItemFragment extends Fragment {
         detailsLL = view.findViewById(R.id.details_ll);
         commentsLL = view.findViewById(R.id.comments_ll);
         ratingsLL = view.findViewById(R.id.ratings_ll);
+        addToBasketLL = view.findViewById(R.id.add_to_basket_ll);
 
         choose();
         getItemDetails();
@@ -124,6 +128,71 @@ public class ViewStockItemFragment extends Fragment {
                         itemImageIv.setImageResource(R.drawable.ic_basket);
                     }
                 });
+
+        getUsername();
+        basket();
+    }
+
+    private void basket() {
+        Button increaseQuantityBut, decreaseQuantityBut, addItemToBasketBut;
+        EditText quantityEt = view.findViewById(R.id.item_quantity_et);
+        increaseQuantityBut = view.findViewById(R.id.increase_quantity_button);
+        decreaseQuantityBut = view.findViewById(R.id.decrease_quantity_button);
+        addItemToBasketBut = view.findViewById(R.id.add_item_to_basket_button);
+
+        increaseQuantityBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quantity += 1;
+                quantityEt.setText(String.valueOf(quantity));
+            }
+        });
+
+        decreaseQuantityBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quantity -= 1;
+                quantityEt.setText(String.valueOf(quantity));
+            }
+        });
+
+        addItemToBasketBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quantity = Integer.parseInt(quantityEt.getText().toString());
+                boolean validQuantity = validateQuantity(quantity);
+
+                if (validQuantity) {
+                    BasketItem basketItem = new BasketItem(stockItem.getTitle(), stockItem.getImagePath(), stockItem.getPrice(), quantity);
+                    addToBasket(basketItem);
+                }
+            }
+        });
+    }
+
+    private boolean validateQuantity(int quantity) {
+        if (quantity > stockItem.getQuantity()) {
+            Toast.makeText(getContext(), "There are only " + stockItem.getQuantity() + " " + stockItem.getTitle() + " remaining.", Toast.LENGTH_SHORT).show();
+            return false;
+        } else
+            return true;
+    }
+
+    private void addToBasket(BasketItem basketItem) {
+        firebaseFirestore.collection("customer").document(userId).collection("basket")
+                .add(basketItem)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Snackbar.make(view, "Added item to basket", Snackbar.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, e.toString());
+                    }
+                });
     }
 
     private void leaveComment() {
@@ -131,7 +200,6 @@ public class ViewStockItemFragment extends Fragment {
         FloatingActionButton sendMessageBut = view.findViewById(R.id.send_message_button);
 
         getComments();
-        getUsername();
 
         sendMessageBut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,6 +247,7 @@ public class ViewStockItemFragment extends Fragment {
                         if (documentSnapshot.exists()) {
                             Admin admin = documentSnapshot.toObject(Admin.class);
                             username = admin.getFirstName() + " " + admin.getSurname();
+                            addToBasketLL.setVisibility(View.GONE);
                         } else {
                             firebaseFirestore.collection("customer").document(firebaseAuth.getCurrentUser().getUid()).get()
                                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

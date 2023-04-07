@@ -115,4 +115,7 @@
     <string name="stock_item_image">Stock Item Image</string>
     <string name="send_comment_button">Send comment button</string>
 
+    <!-- Basket -->
+    <string name="_1">1</string>
+
 </resources>
