@@ -52,7 +52,7 @@
 
             <TextView
                 android:id="@+id/basket_item_price"
-                android:layout_width="wrap_content"
+                android:layout_width="45dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/basket_item_title"
                 android:layout_toEndOf="@id/basket_item_image_cv"
@@ -63,7 +63,7 @@
 
             <TextView
                 android:id="@+id/basket_item_quantity"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/basket_item_title"
                 android:layout_toEndOf="@id/basket_item_price"
@@ -80,7 +80,7 @@
                 app:drawableStartCompat="@drawable/ic_delete"
                 android:layout_toEndOf="@id/basket_item_quantity"
                 android:layout_alignBottom="@id/basket_item_quantity"
-                android:layout_marginStart="80dp"  />
+                android:layout_marginStart="40dp"  />
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

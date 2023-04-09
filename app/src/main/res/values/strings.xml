@@ -117,5 +117,28 @@
 
     <!-- Basket -->
     <string name="_1">1</string>
+    <string name="checkout_basket">Checkout Basket</string>
+    <string name="continue_shopping">Continue Shopping</string>
+    <string name="total_quantity">Total Quantity</string>
+    <string name="total_price">Total Price: €</string>
+    <string name="shopping_basket_total">Shopping Basket Total €</string>
+    <string name="items">[ Items]</string>
+    <string name="discount_code">Enter Discount Code</string>
+    <string name="apply">Apply</string>
+    <string name="secure_payment">Secure Payment</string>
+    <string name="discount_applied">Discount Applied</string>
+    <string name="subtotal">Subtotal: €</string>
+    <string name="discount_amount">Discount Amount:</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="card_number">Card Number</string>
+    <string name="enter_card_number">Enter Card Number</string>
+    <string name="cardholder_s_name">Cardholder\'s Name</string>
+    <string name="enter_cardholder_s_name">Enter Cardholder\'s Name</string>
+    <string name="mm">MM</string>
+    <string name="expiry_date">Expiry Date</string>
+    <string name="backslash">/</string>
+    <string name="yy">YY</string>
+    <string name="security_code">Security Code</string>
+    <string name="blank_string" />
 
 </resources>

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.software_pattern_online_shop.HomePage.CustomerHomeActivity;
 import com.example.software_pattern_online_shop.Model.Customer;
+import com.example.software_pattern_online_shop.Model.PaymentMethod;
 import com.example.software_pattern_online_shop.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -68,12 +69,17 @@ public class CustomerRegisterActivity extends AppCompatActivity {
     }
 
     private void register() {
-        EditText addressL1ET, addressL2ET, addressL3ET, townOrCityET, eircodeET;
+        EditText addressL1ET, addressL2ET, addressL3ET, townOrCityET, eircodeET, cardNumberET, cardholdersNameET, expiryMonthET, expiryYearET, securityCodeET;
         addressL1ET = findViewById(R.id.reg_address_line_1_et);
         addressL2ET = findViewById(R.id.reg_address_line_2_et);
         addressL3ET = findViewById(R.id.reg_address_line_3_et);
         townOrCityET = findViewById(R.id.reg_town_or_city_et);
         eircodeET = findViewById(R.id.reg_eircode_et);
+        cardNumberET = findViewById(R.id.reg_card_number_et);
+        cardholdersNameET = findViewById(R.id.reg_cardholder_name_et);
+        expiryMonthET = findViewById(R.id.expiry_date_month_et);
+        expiryYearET = findViewById(R.id.expiry_date_year_et);
+        securityCodeET = findViewById(R.id.security_code_et);
 
         String addressLine1 = addressL1ET.getText().toString();
         String addressLine2 = addressL2ET.getText().toString();
@@ -82,13 +88,20 @@ public class CustomerRegisterActivity extends AppCompatActivity {
         String county = countySpinner.getSelectedItem().toString();
         String eircode = eircodeET.getText().toString();
 
+        String cardNumber = cardNumberET.getText().toString();
+        String cardholdersName = cardholdersNameET.getText().toString();
+        String expiryDate = expiryMonthET.getText().toString() + "/" + expiryYearET.getText().toString();
+        String securityCode = securityCodeET.getText().toString();
+        PaymentMethod paymentMethod = new PaymentMethod(cardNumber, cardholdersName, expiryDate, securityCode);
+
         boolean validAddressLine1 = RegisterActivity.validateBlank(addressLine1, addressLine1LO);
         boolean validTownOrCity = RegisterActivity.validateBlank(townOrCity, townOrCityLO);
         boolean validCounty = validateCounty(county);
         boolean validEircode = validateEircode(eircode);
 
         if (validAddressLine1 && validTownOrCity && validCounty && validEircode) {
-            addCustomerToDB(addressLine1, addressLine2, addressLine3, townOrCity, county, eircode);
+            String address = addressLine1 + ", " + addressLine2 + ", " + addressLine3 + ", " + townOrCity + ", " + county + ", " + eircode;
+            addCustomerToDB(address, paymentMethod);
         }
     }
 
@@ -117,13 +130,11 @@ public class CustomerRegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void addCustomerToDB(String addressLine1, String addressLine2, String addressLine3, String townOrCity, String county, String eircode) {
+    private void addCustomerToDB(String address, PaymentMethod paymentMethod) {
         String firstName = getIntent().getStringExtra("FIRST_NAME");
         String surname = getIntent().getStringExtra("SURNAME");
         String email = getIntent().getStringExtra("EMAIL");
         String password = getIntent().getStringExtra("PASSWORD");
-        String address = addressLine1 + ", " + addressLine2 + ", " + addressLine3 + ", " + townOrCity + ", " + county + ", " + eircode;
-        String paymentMethod = "Payment Method";
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

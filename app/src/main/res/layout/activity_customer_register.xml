@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,182 +7,343 @@
     android:layout_height="match_parent"
     tools:context=".LoginRegister.CustomerRegisterActivity">
 
-    <TextView
-        android:id="@+id/customer_account_tv"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/customer_account"
-        android:textSize="30sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:fontFamily="serif"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="40dp"/>
+        android:layout_height="wrap_content">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/reg_address_line_1"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/customer_account_tv"
-        android:hint="@string/address_line_1"
-        android:layout_marginTop="30dp"
-        android:paddingStart="45dp"
-        android:paddingEnd="45dp"
-        android:textColorHint="@color/black"
-        app:boxStrokeColor="@color/grey"
-        app:boxStrokeWidth="1dp"
-        app:errorEnabled="true"
-        app:hintTextColor="@color/black">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/reg_address_line_1_et"
+        <TextView
+            android:id="@+id/customer_account_tv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text"
-            android:textColor="@color/black"
-            android:textColorHint="#757575" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/reg_address_line_2"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/reg_address_line_1"
-        android:hint="@string/address_line_2"
-        android:paddingStart="45dp"
-        android:paddingEnd="45dp"
-        android:textColorHint="@color/black"
-        app:boxStrokeColor="@color/grey"
-        app:boxStrokeWidth="1dp"
-        app:errorEnabled="true"
-        app:hintTextColor="@color/black">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/reg_address_line_2_et"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text"
-            android:textColor="@color/black"
-            android:textColorHint="#757575" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/reg_address_line_3"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/reg_address_line_2"
-        android:hint="@string/address_line_3"
-        android:paddingStart="45dp"
-        android:paddingEnd="45dp"
-        android:textColorHint="@color/black"
-        app:boxStrokeColor="@color/grey"
-        app:boxStrokeWidth="1dp"
-        app:errorEnabled="true"
-        app:hintTextColor="@color/black">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/reg_address_line_3_et"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text"
-            android:textColor="@color/black"
-            android:textColorHint="#757575" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/reg_town_or_city"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/reg_address_line_3"
-        android:hint="@string/town_or_city"
-        android:paddingStart="45dp"
-        android:paddingEnd="45dp"
-        android:textColorHint="@color/black"
-        app:boxStrokeColor="@color/grey"
-        app:boxStrokeWidth="1dp"
-        app:errorEnabled="true"
-        app:hintTextColor="@color/black">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/reg_town_or_city_et"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text"
-            android:textColor="@color/black"
-            android:textColorHint="#757575" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <LinearLayout
-        android:id="@+id/county_eircode_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/reg_town_or_city"
-        android:layout_marginStart="45dp"
-        android:layout_marginEnd="45dp"
-        android:orientation="horizontal">
-
-        <Spinner
-            android:id="@+id/reg_county_spinner"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/reg_eircode"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/eircode"
-            android:textColorHint="@color/black"
-            android:padding="5dp"
-            app:boxStrokeColor="@color/grey"
-            app:boxStrokeWidth="1dp"
-            app:errorEnabled="true"
-            app:hintTextColor="@color/black"
-            android:layout_weight="1">
+            android:text="@string/customer_account"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="40dp"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/reg_eircode_et"
+        <LinearLayout
+            android:id="@+id/card_details_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/customer_account_tv"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
+
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text"
+                android:layout_height="wrap_content"
+                android:text="@string/payment_details"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:textSize="18sp"
                 android:textColor="@color/black"
-                android:textColorHint="#757575"
-                android:maxLength="7"/>
+                android:layout_margin="5dp"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reg_card_number"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/card_number"
+                android:paddingStart="45dp"
+                android:paddingEnd="45dp"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/grey"
+                app:boxStrokeWidth="1dp"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/black">
 
-    </LinearLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reg_card_number_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:maxLength="16"
+                    android:textColor="@color/black"
+                    android:textColorHint="#757575" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/register_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/register"
-        android:textSize="20sp"
-        android:layout_above="@id/go_back_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reg_cardholder_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/cardholder_s_name"
+                android:paddingStart="45dp"
+                android:paddingEnd="45dp"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/grey"
+                app:boxStrokeWidth="1dp"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/black">
 
-    <Button
-        android:id="@+id/go_back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/go_back"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:textSize="15sp"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:background="#00000000"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reg_cardholder_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/black"
+                    android:textColorHint="#757575" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/expiry_date"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:paddingStart="45dp"
+                android:paddingEnd="45dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="45dp"
+                android:paddingEnd="45dp">
+
+                <EditText
+                    android:id="@+id/expiry_date_month_et"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/customer_border_white_background"
+                    android:hint="@string/mm"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/backslash"
+                    android:textSize="26sp"
+                    android:layout_gravity="center_vertical"/>
+
+                <EditText
+                    android:id="@+id/expiry_date_year_et"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/customer_border_white_background"
+                    android:hint="@string/yy"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/security_code_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:paddingStart="45dp"
+                android:paddingEnd="45dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/security_code"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/security_code_et"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/customer_border_white_background"
+                        android:hint="@string/blank_string"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:textSize="12sp"/>
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="5dp"
+                        android:src="@drawable/credit_card_cvv"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/address_details_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/card_details_ll">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reg_address_line_1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/address_line_1"
+                android:layout_marginTop="10dp"
+                android:paddingStart="45dp"
+                android:paddingEnd="45dp"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/grey"
+                app:boxStrokeWidth="1dp"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reg_address_line_1_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textColorHint="#757575" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reg_address_line_2"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/reg_address_line_1"
+                android:hint="@string/address_line_2"
+                android:paddingStart="45dp"
+                android:paddingEnd="45dp"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/grey"
+                app:boxStrokeWidth="1dp"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reg_address_line_2_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textColorHint="#757575" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reg_address_line_3"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/reg_address_line_2"
+                android:hint="@string/address_line_3"
+                android:paddingStart="45dp"
+                android:paddingEnd="45dp"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/grey"
+                app:boxStrokeWidth="1dp"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reg_address_line_3_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textColorHint="#757575" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reg_town_or_city"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/reg_address_line_3"
+                android:hint="@string/town_or_city"
+                android:paddingStart="45dp"
+                android:paddingEnd="45dp"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/grey"
+                app:boxStrokeWidth="1dp"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reg_town_or_city_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textColorHint="#757575" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/county_eircode_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/reg_town_or_city"
+                android:layout_marginStart="45dp"
+                android:layout_marginEnd="45dp"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/reg_county_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/reg_eircode"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/eircode"
+                    android:textColorHint="@color/black"
+                    android:padding="5dp"
+                    app:boxStrokeColor="@color/grey"
+                    app:boxStrokeWidth="1dp"
+                    app:errorEnabled="true"
+                    app:hintTextColor="@color/black"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/reg_eircode_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textColorHint="#757575"
+                        android:maxLength="7"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/register_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register"
+            android:textSize="20sp"
+            android:layout_below="@id/address_details_rl"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"/>
+
+        <Button
+            android:id="@+id/go_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/go_back"
+            android:layout_below="@id/register_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:textSize="15sp"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:background="#00000000"/>
+
+    </RelativeLayout>
+</ScrollView>

@@ -55,7 +55,7 @@ public class ProfileFragment extends Fragment {
                             fullNameTv.setText(customer.getFirstName() + " " + customer.getSurname());
                             emailTv.setText(customer.getEmail());
                             passwordTv.setText(customer.getPassword());
-                            paymentMethodTv.setText(customer.getPaymentMethod());
+//                            paymentMethodTv.setText(customer.getPaymentMethod());
                             addressTv.setText(customer.getAddress());
                         }
                     }

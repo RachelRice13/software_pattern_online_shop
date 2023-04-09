@@ -6,22 +6,119 @@
     android:layout_height="match_parent"
     tools:context=".Basket.BasketFragment">
 
-    <ImageView
-        android:id="@+id/topTech_logo"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
+    <RelativeLayout
+        android:id="@+id/basket_details_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginTop="60dp"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@string/top_tech_logo"
-        android:src="@drawable/logo"
-        tools:ignore="ImageContrastCheck" />
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/border_bottom"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/total_price_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/shopping_basket_total"
+            android:padding="5dp"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/total_quantity_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/total_price_tv"
+            android:text="@string/items"
+            android:padding="5dp"
+            android:textSize="12sp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/discount_applied_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/total_price_tv"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:visibility="invisible"
+            android:text="@string/discount_applied"
+            android:padding="5dp"
+            android:textSize="12sp"
+            android:textColor="@color/red" />
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/basket_rv"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_below="@id/topTech_logo"
-        android:layout_margin="10dp"
+        android:layout_height="325dp"
+        android:layout_below="@id/basket_details_ll"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:padding="6dp"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical" />
+
+    <LinearLayout
+        android:id="@+id/discount_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_above="@id/buttons_ll"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/border_bottom">
+
+        <EditText
+            android:id="@+id/discount_code_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/discount_code"
+            android:layout_margin="5dp"
+            android:background="@drawable/customer_border_white_background"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:textColor="@color/black"/>
+
+        <Button
+            android:id="@+id/apply_discount_code_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/apply"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttons_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp">
+
+        <Button
+            android:id="@+id/checkout_basket_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/secure_payment"
+            android:textSize="12sp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/continue_shopping_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/continue_shopping"
+            android:textSize="12sp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
 </RelativeLayout>
