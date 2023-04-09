@@ -1,6 +1,8 @@
 package com.example.software_pattern_online_shop.Model;
 
-public class Customer extends User {
+import java.io.Serializable;
+
+public class Customer extends User implements Serializable {
     String address;
     PaymentMethod paymentMethod;
 

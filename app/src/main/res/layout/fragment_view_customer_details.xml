@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Customer.ViewCustomerDetailsFragment">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/go_back_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="60dp"
+        android:backgroundTint="@color/transparent"
+        android:clickable="true"
+        android:contentDescription="@string/go_back_button"
+        android:focusable="true"
+        android:src="@drawable/ic_arrow_back"
+        app:borderWidth="0dp"
+        app:elevation="0dp"
+        app:fabSize="mini"
+        app:maxImageSize="30dp"
+        tools:ignore="RedundantDescriptionCheck" />
+
+    <TextView
+        android:id="@+id/customer_full_name_tv"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:text="@string/full_name"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_alignTop="@id/go_back_button"
+        android:layout_alignBottom="@id/go_back_button"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/profile_image_iv"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_below="@id/customer_full_name_tv"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_profile"
+        tools:ignore="ImageContrastCheck"
+        android:contentDescription="@string/stock_item_image"/>
+
+    <LinearLayout
+        android:id="@+id/button_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_image_iv"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <Button
+            android:id="@+id/details_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="@string/details"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/transparent_button"
+            style="?android:attr/buttonBarButtonStyle" />
+
+        <Button
+            android:id="@+id/purchase_history_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="@string/purchase_history"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/transparent_button"
+            style="?android:attr/buttonBarButtonStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/details_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_ll"
+        android:orientation="vertical"
+        android:background="@drawable/customer_border_white_background"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="20dp"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:drawableStartCompat="@drawable/ic_email"
+                android:drawablePadding="15dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/customer_email_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/address"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:drawableStartCompat="@drawable/ic_location"
+                android:drawablePadding="15dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/customer_address_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/address"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/purchase_history_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_ll"
+        android:orientation="vertical"
+        android:background="@drawable/customer_border_white_background"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:visibility="invisible">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/purchase_history_rv"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginBottom="5dp"
+            android:padding="5dp"
+            android:scrollbars="vertical"/>
+    </LinearLayout>
+</RelativeLayout>

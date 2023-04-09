@@ -122,7 +122,7 @@
     <string name="total_quantity">Total Quantity</string>
     <string name="total_price">Total Price: €</string>
     <string name="shopping_basket_total">Shopping Basket Total €</string>
-    <string name="items">[ Items]</string>
+    <string name="items">Items</string>
     <string name="discount_code">Enter Discount Code</string>
     <string name="apply">Apply</string>
     <string name="secure_payment">Secure Payment</string>
@@ -140,5 +140,9 @@
     <string name="yy">YY</string>
     <string name="security_code">Security Code</string>
     <string name="blank_string" />
+
+    <!-- Purchase History -->
+    <string name="date">Date</string>
+    <string name="item_title">Item Title</string>
 
 </resources>

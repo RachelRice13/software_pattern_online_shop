@@ -2,65 +2,72 @@ package com.example.software_pattern_online_shop.Customer;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.software_pattern_online_shop.Model.Customer;
 import com.example.software_pattern_online_shop.R;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CustomerDetailsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class CustomerDetailsFragment extends Fragment {
+    private View view;
+    private ArrayList<Customer> customers;
+    private CustomerAdapter customerAdapter;
+    private FirebaseFirestore firebaseFirestore;
+    private ListenerRegistration listenerRegistration;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public CustomerDetailsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CustomerDetailsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CustomerDetailsFragment newInstance(String param1, String param2) {
-        CustomerDetailsFragment fragment = new CustomerDetailsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public CustomerDetailsFragment() {}
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_customer_details, container, false);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        buildRecyclerView();
+
+        return view;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customer_details, container, false);
+    private void buildRecyclerView() {
+        customers = new ArrayList<>();
+        RecyclerView recyclerView = view.findViewById(R.id.customer_rv);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        customerAdapter = new CustomerAdapter(customers, getContext(), getFragmentManager());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(customerAdapter);
+        populateList();
+    }
+
+    private void populateList() {
+        Query query = firebaseFirestore.collection("customer").orderBy("firstName", Query.Direction.ASCENDING);
+        listenerRegistration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                for (DocumentChange change : value.getDocumentChanges()) {
+                    if (change.getType() == DocumentChange.Type.ADDED) {
+                        Customer customer = change.getDocument().toObject(Customer.class);
+                        customers.add(customer);
+                        customerAdapter.notifyDataSetChanged();
+                    }
+                }
+                listenerRegistration.remove();
+            }
+        });
     }
 }

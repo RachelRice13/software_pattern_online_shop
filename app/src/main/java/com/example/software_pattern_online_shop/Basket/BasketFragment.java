@@ -124,7 +124,7 @@ public class BasketFragment extends Fragment {
     }
 
     private void checkout() {
-        String date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
+        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         Purchase purchase = new Purchase(basket, totalPrice, date, new PaymentMethod());
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
