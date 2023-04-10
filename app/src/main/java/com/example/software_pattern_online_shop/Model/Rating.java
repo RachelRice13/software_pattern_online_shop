@@ -1,6 +1,8 @@
 package com.example.software_pattern_online_shop.Model;
 
-public class Rating {
+import java.io.Serializable;
+
+public class Rating implements Serializable {
     float rating;
     String userId;
 

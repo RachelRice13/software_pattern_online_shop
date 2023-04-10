@@ -145,4 +145,8 @@
     <string name="date">Date</string>
     <string name="item_title">Item Title</string>
 
+    <!-- Update Stock -->
+    <string name="update_stock_details">Update Stock Details</string>
+    <string name="update">Update</string>
+
 </resources>

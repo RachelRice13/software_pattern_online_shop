@@ -1,6 +1,8 @@
 package com.example.software_pattern_online_shop.Model;
 
-public class Comment {
+import java.io.Serializable;
+
+public class Comment implements Serializable  {
     String comment, userName;
 
     public Comment() {}
