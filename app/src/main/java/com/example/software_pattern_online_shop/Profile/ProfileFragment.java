@@ -21,8 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.software_pattern_online_shop.Model.Customer;
 import com.example.software_pattern_online_shop.Model.PaymentMethod;
+import com.example.software_pattern_online_shop.Model.User;
 import com.example.software_pattern_online_shop.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,7 +44,7 @@ public class ProfileFragment extends Fragment {
     private StorageReference storageReference;
     private ImageView profilePicIv;
     private Uri profileUri;
-    private Customer customer;
+    private User customer;
 
     public ProfileFragment() {}
 
@@ -83,7 +83,7 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
-                            customer = documentSnapshot.toObject(Customer.class);
+                            customer = documentSnapshot.toObject(User.class);
                             PaymentMethod paymentMethod = customer.getPaymentMethod();
                             String lastThreeDigits = paymentMethod.getCardNumber().substring(12,15);
 

@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.software_pattern_online_shop.Model.Customer;
+import com.example.software_pattern_online_shop.Model.User;
 import com.example.software_pattern_online_shop.R;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class CustomerDetailsFragment extends Fragment {
     private View view;
-    private ArrayList<Customer> customers;
+    private ArrayList<User> customers;
     private CustomerAdapter customerAdapter;
     private FirebaseFirestore firebaseFirestore;
     private ListenerRegistration listenerRegistration;
@@ -61,7 +61,7 @@ public class CustomerDetailsFragment extends Fragment {
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 for (DocumentChange change : value.getDocumentChanges()) {
                     if (change.getType() == DocumentChange.Type.ADDED) {
-                        Customer customer = change.getDocument().toObject(Customer.class);
+                        User customer = change.getDocument().toObject(User.class);
                         customers.add(customer);
                         customerAdapter.notifyDataSetChanged();
                     }

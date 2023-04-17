@@ -16,8 +16,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.software_pattern_online_shop.Model.Customer;
 import com.example.software_pattern_online_shop.Model.Purchase;
+import com.example.software_pattern_online_shop.Model.User;
 import com.example.software_pattern_online_shop.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,7 +39,7 @@ public class ViewCustomerDetailsFragment extends Fragment {
     private ArrayList<Purchase> purchases;
     private PurchaseAdapter purchaseAdapter;
     private FragmentTransaction transaction;
-    private Customer customer;
+    private User customer;
     private LinearLayout detailsLL, purchaseHistoryLL;
     private FirebaseFirestore firebaseFirestore;
     private ListenerRegistration listenerRegistration;
@@ -52,7 +52,7 @@ public class ViewCustomerDetailsFragment extends Fragment {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         Bundle bundle = getArguments();
-        customer = (Customer) bundle.getSerializable("customer");
+        customer = (User) bundle.getSerializable("customer");
         transaction = getFragmentManager().beginTransaction();
         detailsLL = view.findViewById(R.id.details_ll);
         purchaseHistoryLL = view.findViewById(R.id.purchase_history_ll);

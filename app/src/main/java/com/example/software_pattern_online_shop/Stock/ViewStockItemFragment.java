@@ -23,12 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.software_pattern_online_shop.HomePage.AdminHomeFragment;
-import com.example.software_pattern_online_shop.Model.Admin;
 import com.example.software_pattern_online_shop.Model.BasketItem;
 import com.example.software_pattern_online_shop.Model.Comment;
-import com.example.software_pattern_online_shop.Model.Customer;
 import com.example.software_pattern_online_shop.Model.Rating;
 import com.example.software_pattern_online_shop.Model.StockItem;
+import com.example.software_pattern_online_shop.Model.User;
 import com.example.software_pattern_online_shop.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -245,7 +244,7 @@ public class ViewStockItemFragment extends Fragment {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
-                            Admin admin = documentSnapshot.toObject(Admin.class);
+                            User admin = documentSnapshot.toObject(User.class);
                             username = admin.getFirstName() + " " + admin.getSurname();
                             addToBasketLL.setVisibility(View.GONE);
                         } else {
@@ -254,7 +253,7 @@ public class ViewStockItemFragment extends Fragment {
                                         @Override
                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                                             if (documentSnapshot.exists()) {
-                                                Customer customer = documentSnapshot.toObject(Customer.class);
+                                                User customer = documentSnapshot.toObject(User.class);
                                                 username = customer.getFirstName() + " " + customer.getSurname();
                                             } else {
                                                 Log.e(TAG, "User doesn't exist in either the Admin or Customer collections");

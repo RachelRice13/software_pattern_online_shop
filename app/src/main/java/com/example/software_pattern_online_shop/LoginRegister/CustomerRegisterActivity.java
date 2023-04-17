@@ -14,8 +14,9 @@ import android.widget.Spinner;
 
 import com.example.software_pattern_online_shop.Common.Validation;
 import com.example.software_pattern_online_shop.HomePage.CustomerHomeActivity;
-import com.example.software_pattern_online_shop.Model.Customer;
 import com.example.software_pattern_online_shop.Model.PaymentMethod;
+import com.example.software_pattern_online_shop.Model.User;
+import com.example.software_pattern_online_shop.Model.UserBuilder;
 import com.example.software_pattern_online_shop.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -107,9 +108,9 @@ public class CustomerRegisterActivity extends RegisterUserTemplate {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Customer customer = new Customer(firstName, surname, email, password, jtOrA, " ", paymentMethod);
-                            String customerId = FirebaseAuth.getInstance().getUid();;
-                            addUserToFireStore("customer", customerId, customer, CustomerRegisterActivity.this, CustomerHomeActivity.class);
+                            User user = new UserBuilder(firstName, surname, email, password, jtOrA, "", paymentMethod).createCustomer();
+                            String customerId = FirebaseAuth.getInstance().getUid();
+                            addUserToFireStore("customer", customerId, user, CustomerRegisterActivity.this, CustomerHomeActivity.class);
                         } else {
                             Log.e(TAG, task.getException().getMessage());
                         }

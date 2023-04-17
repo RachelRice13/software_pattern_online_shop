@@ -11,18 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.software_pattern_online_shop.Model.Customer;
+import com.example.software_pattern_online_shop.Model.User;
 import com.example.software_pattern_online_shop.R;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ExampleViewHolder> {
-    private List<Customer> customers;
+    private List<User> customers;
     private Context context;
     private FragmentManager fragmentManager;
 
-    public CustomerAdapter(List<Customer> customers, Context context, FragmentManager fragmentManager) {
+    public CustomerAdapter(List<User> customers, Context context, FragmentManager fragmentManager) {
         this.customers = customers;
         this.context = context;
         this.fragmentManager = fragmentManager;
@@ -49,7 +49,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Exampl
 
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
-        Customer customer = customers.get(position);
+        User customer = customers.get(position);
         holder.fullNameTv.setText(customer.getFirstName() + " " + customer.getSurname());
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {

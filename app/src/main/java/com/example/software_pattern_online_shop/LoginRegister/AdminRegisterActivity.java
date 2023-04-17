@@ -8,8 +8,9 @@ import android.widget.EditText;
 
 import com.example.software_pattern_online_shop.Common.Validation;
 import com.example.software_pattern_online_shop.HomePage.AdminHomeActivity;
-import com.example.software_pattern_online_shop.Model.Admin;
 import com.example.software_pattern_online_shop.Model.PaymentMethod;
+import com.example.software_pattern_online_shop.Model.User;
+import com.example.software_pattern_online_shop.Model.UserBuilder;
 import com.example.software_pattern_online_shop.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -64,9 +65,9 @@ public class AdminRegisterActivity extends RegisterUserTemplate {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Admin admin = new Admin(firstName, surname, email, password, jtOrA, employeeNum);
-                            String adminId = FirebaseAuth.getInstance().getUid();;
-                            addUserToFireStore("admin", adminId, admin, AdminRegisterActivity.this, AdminHomeActivity.class);
+                            User user = new UserBuilder(firstName, surname, email, password, jtOrA, employeeNum).createAdmin();
+                            String adminId = FirebaseAuth.getInstance().getUid();
+                            addUserToFireStore("admin", adminId, user, AdminRegisterActivity.this, AdminHomeActivity.class);
                         } else {
                             Log.e(TAG, task.getException().getMessage());
                         }

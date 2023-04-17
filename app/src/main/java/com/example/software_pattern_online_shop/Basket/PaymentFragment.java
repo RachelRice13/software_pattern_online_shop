@@ -17,10 +17,10 @@ import android.widget.Toast;
 
 import com.example.software_pattern_online_shop.HomePage.CustomerHomeFragment;
 import com.example.software_pattern_online_shop.Model.BasketItem;
-import com.example.software_pattern_online_shop.Model.Customer;
 import com.example.software_pattern_online_shop.Model.PaymentMethod;
 import com.example.software_pattern_online_shop.Model.Purchase;
 import com.example.software_pattern_online_shop.Model.StockItem;
+import com.example.software_pattern_online_shop.Model.User;
 import com.example.software_pattern_online_shop.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -106,7 +106,7 @@ public class PaymentFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
-                            Customer customer = task.getResult().toObject(Customer.class);
+                            User customer = task.getResult().toObject(User.class);
                             PaymentMethod paymentMethod = customer.getPaymentMethod();
 
                             cardNumberEt.setText(paymentMethod.getCardNumber());
