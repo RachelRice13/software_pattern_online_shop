@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.software_pattern_online_shop.Common.Validation;
 import com.example.software_pattern_online_shop.HomePage.AdminHomeActivity;
@@ -41,24 +40,8 @@ public class LoginActivity extends AppCompatActivity {
         emailLO = findViewById(R.id.login_email);
         passwordLO = findViewById(R.id.login_password);
 
-        Button loginButton = findViewById(R.id.login_button);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login();
-            }
-        });
+        buttonSetup();
 
-        Button goToLP = findViewById(R.id.landing_page_button);
-        goToLP.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent landingPageIntent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(landingPageIntent);
-            }
-        });
-
-        // Hides the action bar
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -82,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "loginUserWithEmail: success");
-                                goToHomePage();
+                                goToHomePage("admin", AdminHomeActivity.class);
                             } else {
                                 Log.e(TAG, "loginUserWithEmail: failure", task.getException());
                                 if (task.getException().getMessage().equals("There is no user record corresponding to this identifier. The user may have been deleted.")) {
@@ -97,30 +80,38 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void goToHomePage() {
-        firebaseFirestore.collection("admin").document(firebaseAuth.getCurrentUser().getUid()).get()
+    private void goToHomePage(String collectionName, Class homeClass) {
+        firebaseFirestore.collection(collectionName).document(firebaseAuth.getCurrentUser().getUid()).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
-                            Intent adminIntent = new Intent(LoginActivity.this, AdminHomeActivity.class);
-                            startActivity(adminIntent);
+                            Intent intent = new Intent(LoginActivity.this, homeClass);
+                            startActivity(intent);
                         } else {
-                            firebaseFirestore.collection("customer").document(firebaseAuth.getCurrentUser().getUid()).get()
-                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            if (documentSnapshot.exists()) {
-                                                Intent customerIntent = new Intent(LoginActivity.this, CustomerHomeActivity.class);
-                                                startActivity(customerIntent);
-                                            } else {
-                                                Toast.makeText(LoginActivity.this, "Error Logging In", Toast.LENGTH_SHORT).show();
-                                                Log.e(TAG, "User doesn't exist in either the Admin or Customer collections");
-                                            }
-                                        }
-                                    });
+                            Log.e(TAG, "User doesn't exist in the " + collectionName + " collection");
+                            goToHomePage("customer", CustomerHomeActivity.class);
                         }
                     }
                 });
+    }
+
+    private void buttonSetup() {
+        Button loginButton = findViewById(R.id.login_button);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                login();
+            }
+        });
+
+        Button goToLP = findViewById(R.id.landing_page_button);
+        goToLP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent landingPageIntent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(landingPageIntent);
+            }
+        });
     }
 }
