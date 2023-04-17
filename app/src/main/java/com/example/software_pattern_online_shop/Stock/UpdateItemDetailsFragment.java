@@ -25,8 +25,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.software_pattern_online_shop.Common.Validation;
 import com.example.software_pattern_online_shop.HomePage.AdminHomeFragment;
-import com.example.software_pattern_online_shop.LoginRegister.RegisterActivity;
 import com.example.software_pattern_online_shop.Model.Comment;
 import com.example.software_pattern_online_shop.Model.Rating;
 import com.example.software_pattern_online_shop.Model.StockItem;
@@ -189,10 +189,10 @@ public class UpdateItemDetailsFragment extends Fragment {
         String quantityString = quantityET.getText().toString();
         String category = categoryET.getText().toString();
 
-        boolean validManufacturer = RegisterActivity.validateBlank(manufacturer, manufacturerLO);
-        boolean validPrice = validateNumber(priceString, priceLO);
-        boolean validQuantity = validateNumber(quantityString, quantityLO);
-        boolean validCategory = RegisterActivity.validateBlank(category, categoryLO);
+        boolean validManufacturer = Validation.validateBlank(manufacturer, manufacturerLO);
+        boolean validPrice = Validation.validateNumber(priceString, priceLO);
+        boolean validQuantity = Validation.validateNumber(quantityString, quantityLO);
+        boolean validCategory = Validation.validateBlank(category, categoryLO);
 
         if (validManufacturer && validPrice && validQuantity && validCategory) {
             DecimalFormat decimalFormat = new DecimalFormat("#.##");
@@ -203,22 +203,6 @@ public class UpdateItemDetailsFragment extends Fragment {
 
             StockItem updateItem = new StockItem(stockItem.getTitle(), manufacturer, category, stockItem.getImagePath(), price, quantity, ratings, comments);
             updateFireStore(updateItem);
-        }
-    }
-
-    private boolean validateNumber(String number, TextInputLayout layout) {
-        if (number.isEmpty()) {
-            layout.setError("This is Required");
-            return false;
-        } else {
-            String firstDigit = number.substring(0,1);
-            if (firstDigit.equals("0")) {
-                layout.setError("Number must be greater than 0");
-                return false;
-            } else {
-                layout.setError(null);
-                return true;
-            }
         }
     }
 

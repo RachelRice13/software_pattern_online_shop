@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.software_pattern_online_shop.Common.Validation;
 import com.example.software_pattern_online_shop.HomePage.CustomerHomeActivity;
 import com.example.software_pattern_online_shop.Model.Customer;
 import com.example.software_pattern_online_shop.Model.PaymentMethod;
@@ -94,10 +95,10 @@ public class CustomerRegisterActivity extends AppCompatActivity {
         String securityCode = securityCodeET.getText().toString();
         PaymentMethod paymentMethod = new PaymentMethod(cardNumber, cardholdersName, expiryDate, securityCode);
 
-        boolean validAddressLine1 = RegisterActivity.validateBlank(addressLine1, addressLine1LO);
-        boolean validTownOrCity = RegisterActivity.validateBlank(townOrCity, townOrCityLO);
-        boolean validCounty = validateCounty(county);
-        boolean validEircode = validateEircode(eircode);
+        boolean validAddressLine1 = Validation.validateBlank(addressLine1, addressLine1LO);
+        boolean validTownOrCity = Validation.validateBlank(townOrCity, townOrCityLO);
+        boolean validCounty = Validation.validateCounty(county, this);
+        boolean validEircode = Validation.validateEircode(eircode, eircodeLO);
 
         if (validAddressLine1 && validTownOrCity && validCounty && validEircode) {
             String address = addressLine1 + ", " + addressLine2 + ", " + addressLine3 + ", " + townOrCity + ", " + county + ", " + eircode;
@@ -109,25 +110,6 @@ public class CustomerRegisterActivity extends AppCompatActivity {
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.county_options));
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         countySpinner.setAdapter(spinnerArrayAdapter);
-    }
-
-    private boolean validateCounty(String county) {
-        if (county.equals("County")) {
-            Toast.makeText(this, "'County' is not a valid option", Toast.LENGTH_SHORT).show();
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private boolean validateEircode(String eircode) {
-        if (eircode.length() != 7) {
-            eircodeLO.setError("Eircode must contain 7 characters.");
-            return false;
-        } else {
-            eircodeLO.setError(null);
-            return true;
-        }
     }
 
     private void addCustomerToDB(String address, PaymentMethod paymentMethod) {

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.software_pattern_online_shop.Common.Validation;
 import com.example.software_pattern_online_shop.HomePage.AdminHomeActivity;
 import com.example.software_pattern_online_shop.HomePage.CustomerHomeActivity;
 import com.example.software_pattern_online_shop.MainActivity;
@@ -71,8 +72,8 @@ public class LoginActivity extends AppCompatActivity {
         String email = emailET.getText().toString();
         String password = passwordET.getText().toString();
 
-        boolean validEmail = RegisterActivity.validateBlank(email, emailLO);
-        boolean validPassword = RegisterActivity.validateBlank(password, passwordLO);
+        boolean validEmail = Validation.validateBlank(email, emailLO);
+        boolean validPassword = Validation.validateBlank(password, passwordLO);
 
         if (validEmail && validPassword) {
             firebaseAuth.signInWithEmailAndPassword(email, password)

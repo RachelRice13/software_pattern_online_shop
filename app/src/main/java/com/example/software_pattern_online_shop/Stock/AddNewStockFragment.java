@@ -23,8 +23,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.software_pattern_online_shop.Common.Validation;
 import com.example.software_pattern_online_shop.HomePage.AdminHomeFragment;
-import com.example.software_pattern_online_shop.LoginRegister.RegisterActivity;
 import com.example.software_pattern_online_shop.Model.Comment;
 import com.example.software_pattern_online_shop.Model.Rating;
 import com.example.software_pattern_online_shop.Model.StockItem;
@@ -117,7 +117,7 @@ public class AddNewStockFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 imageName = imageNameET.getText().toString();
-                boolean validImageName = RegisterActivity.validateBlank(imageName, imageNameLo);
+                boolean validImageName = Validation.validateBlank(imageName, imageNameLo);
 
                 if (validImageName) {
                     Intent choosePictureIntent = new Intent();
@@ -197,12 +197,12 @@ public class AddNewStockFragment extends Fragment {
         String quantityString = quantityET.getText().toString();
         String category = categoryET.getText().toString();
 
-        boolean validTitle = RegisterActivity.validateBlank(title, titleLO);
-        boolean validManufacturer = RegisterActivity.validateBlank(manufacturer, manufacturerLO);
-        boolean validPrice = validateNumber(priceString, priceLO);
-        boolean validQuantity = validateNumber(quantityString, quantityLO);
-        boolean validCategory = RegisterActivity.validateBlank(category, categoryLO);
-        boolean validImage = validateImage(imagePath);
+        boolean validTitle = Validation.validateBlank(title, titleLO);
+        boolean validManufacturer = Validation.validateBlank(manufacturer, manufacturerLO);
+        boolean validPrice = Validation.validateNumber(priceString, priceLO);
+        boolean validQuantity = Validation.validateNumber(quantityString, quantityLO);
+        boolean validCategory = Validation.validateBlank(category, categoryLO);
+        boolean validImage = Validation.validateImage(imagePath, getContext());
 
         if (validTitle && validManufacturer && validPrice && validQuantity && validCategory && validImage) {
             DecimalFormat decimalFormat = new DecimalFormat("#.##");
@@ -214,31 +214,6 @@ public class AddNewStockFragment extends Fragment {
             StockItem stockItem = new StockItem(title, manufacturer, category, imagePath, price, quantity, ratings, comments);
             addToFireStore(stockItem);
         }
-    }
-
-    private boolean validateImage(String imagePath) {
-       if (imagePath.equals(" ")) {
-           Toast.makeText(getContext(), "Choose an image", Toast.LENGTH_SHORT).show();
-           return false;
-       } else {
-           return true;
-       }
-    }
-
-    private boolean validateNumber(String number, TextInputLayout layout) {
-       if (number.isEmpty()) {
-           layout.setError("This is Required");
-           return false;
-       } else {
-           String firstDigit = number.substring(0,1);
-           if (firstDigit.equals("0")) {
-               layout.setError("Number must be greater than 0");
-               return false;
-           } else {
-               layout.setError(null);
-               return true;
-           }
-       }
     }
 
     public void addToFireStore(StockItem stockItem) {

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.software_pattern_online_shop.Common.Validation;
 import com.example.software_pattern_online_shop.HomePage.AdminHomeActivity;
 import com.example.software_pattern_online_shop.Model.Admin;
 import com.example.software_pattern_online_shop.R;
@@ -69,21 +70,11 @@ public class AdminRegisterActivity extends AppCompatActivity {
         String jobTitle = jobTitleET.getText().toString();
         String employeeNum = employeeNumET.getText().toString();
 
-        boolean validJobTitle = RegisterActivity.validateBlank(jobTitle, jobTitleLO);
-        boolean validEmployeeNum = validateEmployeeNumber(employeeNum);
+        boolean validJobTitle = Validation.validateBlank(jobTitle, jobTitleLO);
+        boolean validEmployeeNum = Validation.validateEmployeeNumber(employeeNum, employeeNumLO);
 
         if (validJobTitle && validEmployeeNum) {
             addAdminToDB(jobTitle, employeeNum);
-        }
-    }
-
-    private boolean validateEmployeeNumber(String employeeNum) {
-        if (employeeNum.length() != 8) {
-            employeeNumLO.setError("Employee Number must contain 8 digits.");
-            return false;
-        } else {
-            employeeNumLO.setError(null);
-            return true;
         }
     }
 

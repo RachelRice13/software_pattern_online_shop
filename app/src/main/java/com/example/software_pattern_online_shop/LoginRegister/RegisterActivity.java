@@ -10,12 +10,10 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.software_pattern_online_shop.Common.Validation;
 import com.example.software_pattern_online_shop.MainActivity;
 import com.example.software_pattern_online_shop.R;
 import com.google.android.material.textfield.TextInputLayout;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     private static final String FIRST_NAME = "FIRST_NAME";
@@ -72,10 +70,10 @@ public class RegisterActivity extends AppCompatActivity {
         String email = emailET.getText().toString();
         String password = passwordET.getText().toString();
 
-        boolean validFirstName = validateBlank(firstName, firstNameLO);
-        boolean validSurname = validateBlank(surname, surnameLO);
-        boolean validEmail = validateBlank(email, emailLO);
-        boolean validPassword = validatePassword(password);
+        boolean validFirstName = Validation.validateBlank(firstName, firstNameLO);
+        boolean validSurname = Validation.validateBlank(surname, surnameLO);
+        boolean validEmail = Validation.validateBlank(email, emailLO);
+        boolean validPassword = Validation.validatePassword(password, passwordLO);
 
         getSelectedRB();
 
@@ -91,33 +89,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
 
-    }
-
-    public static boolean validateBlank(String text, TextInputLayout layout) {
-        if (text.isEmpty()) {
-            layout.setError("This is Required");
-            return false;
-        } else {
-            layout.setError(null);
-            return true;
-        }
-    }
-
-    private boolean validatePassword(String password) {
-        Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
-        Matcher matcher = pattern.matcher(password);
-        if (password.isEmpty()) {
-            passwordLO.setError("This is Required");
-            return false;
-        } else {
-            if (!matcher.matches()) {
-                passwordLO.setError("Password must be at least 8 characters and contain both uppercase and lowercase characters/numbers/special characters");
-                return false;
-            } else {
-                passwordLO.setError(null);
-                return true;
-            }
-        }
     }
 
     private void getSelectedRB() {
