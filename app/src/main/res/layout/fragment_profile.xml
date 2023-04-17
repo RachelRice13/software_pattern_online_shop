@@ -98,20 +98,4 @@
             android:drawablePadding="15dp"
             android:layout_marginBottom="15dp"/>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/profile_purchase_history_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profile_user_details"
-        android:background="@drawable/custom_border_grey"
-        android:text="@string/purchase_history"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:textColor="#000"
-        android:textSize="20sp"
-        app:drawableStartCompat="@drawable/ic_profile"
-        app:drawableEndCompat="@drawable/ic_arrow_forward"
-        android:drawablePadding="15dp"
-        android:layout_marginTop="50dp"/>
 </RelativeLayout>

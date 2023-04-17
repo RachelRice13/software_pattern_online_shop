@@ -107,7 +107,7 @@ public class CustomerRegisterActivity extends RegisterUserTemplate {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Customer customer = new Customer(firstName, surname, email, password, jtOrA, paymentMethod);
+                            Customer customer = new Customer(firstName, surname, email, password, jtOrA, " ", paymentMethod);
                             String customerId = FirebaseAuth.getInstance().getUid();;
                             addUserToFireStore("customer", customerId, customer, CustomerRegisterActivity.this, CustomerHomeActivity.class);
                         } else {
