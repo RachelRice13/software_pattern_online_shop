@@ -4,8 +4,12 @@ import androidx.annotation.NonNull;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.example.software_pattern_online_shop.Common.Validation;
@@ -21,7 +25,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class CustomerRegisterActivity extends RegisterUserTemplate {
     private static final String TAG = "CustomerRegActivity";
-    private TextInputLayout addressLine1LO, townOrCityLO, eircodeLO;
+    private LinearLayout cardDetailsLl;
+    private RelativeLayout addressRl;
+    private TextInputLayout addressLine1LO, townOrCityLO, eircodeLO, cardNumberLO, cardHoldersNameLO;
+    private String addressLine1, townOrCity, county, eircode, cardNumber, cardholdersName, expiryDate, securityCode;
     private Spinner countySpinner;
     private FirebaseAuth firebaseAuth;
 
@@ -31,22 +38,44 @@ public class CustomerRegisterActivity extends RegisterUserTemplate {
         setContentView(R.layout.activity_customer_register);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        cardDetailsLl = findViewById(R.id.card_details_ll);
+        addressRl = findViewById(R.id.address_details_rl);
         addressLine1LO = findViewById(R.id.reg_address_line_1);
         townOrCityLO = findViewById(R.id.reg_town_or_city);
         eircodeLO = findViewById(R.id.reg_eircode);
+        cardNumberLO = findViewById(R.id.reg_card_number);
+        cardHoldersNameLO = findViewById(R.id.reg_cardholder_name);
         countySpinner = findViewById(R.id.reg_county_spinner);
 
         setCountySpinner(countySpinner);
         buttonSetup();
+        switchLayoutButtons();
         hideActionBar();
     }
 
     @Override
     public void register() {
-        EditText addressL1ET, addressL2ET, addressL3ET, townOrCityET, eircodeET, cardNumberET, cardholdersNameET, expiryMonthET, expiryYearET, securityCodeET;
+        getDetails();
+        PaymentMethod paymentMethod = new PaymentMethod(cardNumber, cardholdersName, expiryDate, securityCode);
+
+        boolean validAddressLine1 = Validation.validateBlank(addressLine1, addressLine1LO);
+        boolean validTownOrCity = Validation.validateBlank(townOrCity, townOrCityLO);
+        boolean validCounty = Validation.validateCounty(county, this);
+        boolean validEircode = Validation.validateEircode(eircode, eircodeLO);
+        boolean validCardNumber = Validation.validateCardNumber(cardNumber, cardNumberLO);
+        boolean validCardHoldersName = Validation.validateBlank(cardholdersName, cardHoldersNameLO);
+        boolean validExpiryDate = Validation.validateExpiryDate(expiryDate, this);
+        boolean validSecurityCode = Validation.validateSecurityNumber(securityCode, this);
+
+        if (validAddressLine1 && validTownOrCity && validCounty && validEircode && validCardNumber && validCardHoldersName && validExpiryDate && validSecurityCode) {
+            String address = addressLine1 + ", "  + townOrCity + ", " + county + ", " + eircode;
+            addUserToDB(address, null, paymentMethod);
+        }
+    }
+
+    public void getDetails() {
+        EditText addressL1ET, townOrCityET, eircodeET, cardNumberET, cardholdersNameET, expiryMonthET, expiryYearET, securityCodeET;
         addressL1ET = findViewById(R.id.reg_address_line_1_et);
-        addressL2ET = findViewById(R.id.reg_address_line_2_et);
-        addressL3ET = findViewById(R.id.reg_address_line_3_et);
         townOrCityET = findViewById(R.id.reg_town_or_city_et);
         eircodeET = findViewById(R.id.reg_eircode_et);
         cardNumberET = findViewById(R.id.reg_card_number_et);
@@ -55,28 +84,15 @@ public class CustomerRegisterActivity extends RegisterUserTemplate {
         expiryYearET = findViewById(R.id.expiry_date_year_et);
         securityCodeET = findViewById(R.id.security_code_et);
 
-        String addressLine1 = addressL1ET.getText().toString();
-        String addressLine2 = addressL2ET.getText().toString();
-        String addressLine3 = addressL3ET.getText().toString();
-        String townOrCity = townOrCityET.getText().toString();
-        String county = countySpinner.getSelectedItem().toString();
-        String eircode = eircodeET.getText().toString();
+        addressLine1 = addressL1ET.getText().toString();
+        townOrCity = townOrCityET.getText().toString();
+        county = countySpinner.getSelectedItem().toString();
+        eircode = eircodeET.getText().toString();
 
-        String cardNumber = cardNumberET.getText().toString();
-        String cardholdersName = cardholdersNameET.getText().toString();
-        String expiryDate = expiryMonthET.getText().toString() + "/" + expiryYearET.getText().toString();
-        String securityCode = securityCodeET.getText().toString();
-        PaymentMethod paymentMethod = new PaymentMethod(cardNumber, cardholdersName, expiryDate, securityCode);
-
-        boolean validAddressLine1 = Validation.validateBlank(addressLine1, addressLine1LO);
-        boolean validTownOrCity = Validation.validateBlank(townOrCity, townOrCityLO);
-        boolean validCounty = Validation.validateCounty(county, this);
-        boolean validEircode = Validation.validateEircode(eircode, eircodeLO);
-
-        if (validAddressLine1 && validTownOrCity && validCounty && validEircode) {
-            String address = addressLine1 + ", " + addressLine2 + ", " + addressLine3 + ", " + townOrCity + ", " + county + ", " + eircode;
-            addUserToDB(address, null, paymentMethod);
-        }
+        cardNumber = cardNumberET.getText().toString();
+        cardholdersName = cardholdersNameET.getText().toString();
+        expiryDate = expiryMonthET.getText().toString() + "/" + expiryYearET.getText().toString();
+        securityCode = securityCodeET.getText().toString();
     }
 
     @Override
@@ -105,5 +121,27 @@ public class CustomerRegisterActivity extends RegisterUserTemplate {
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.county_options));
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         countySpinner.setAdapter(spinnerArrayAdapter);
+    }
+
+    private void switchLayoutButtons() {
+        Button paymentDetailsBut, addressBut;
+        paymentDetailsBut = findViewById(R.id.payment_details_button);
+        addressBut = findViewById(R.id.address_button);
+
+        paymentDetailsBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cardDetailsLl.setVisibility(View.VISIBLE);
+                addressRl.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        addressBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cardDetailsLl.setVisibility(View.INVISIBLE);
+                addressRl.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }

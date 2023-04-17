@@ -17,31 +17,15 @@
         android:textStyle="bold"
         android:fontFamily="serif"
         android:gravity="center_horizontal"
-        android:layout_marginTop="40dp"/>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/profile_image_cv"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/create_account_tv"
-        android:layout_marginTop="10dp"
-        app:cardCornerRadius="100dp">
-
-        <ImageView
-            android:id="@+id/profile_pic"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_profile" />
-    </androidx.cardview.widget.CardView>
+        android:layout_marginTop="100dp"/>
 
     <LinearLayout
         android:id="@+id/name_layout"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/profile_image_cv"
+        android:layout_below="@id/create_account_tv"
         android:layout_centerInParent="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
@@ -194,8 +178,9 @@
         android:layout_height="wrap_content"
         android:text="@string/continue_text"
         android:textSize="20sp"
-        android:layout_above="@id/landing_page_button"
+        android:layout_below="@id/radio_group"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="5dp"/>
 
     <Button
@@ -203,7 +188,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/go_to_landing_page"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/continue_button"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
         android:textSize="15sp"
